@@ -1,0 +1,55 @@
+name: Build and publish packages
+
+on:
+  push:
+    branches: 
+    - main
+    - develop
+    paths-ignore:
+      - '**/README.md'
+
+jobs:
+  build:
+
+    name: Build and publish package
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # avoid shallow clone so nbgv can do its work
+        
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 8.x.x
+      
+    - name: Nerdbank.GitVersioning
+      uses: dotnet/nbgv@v0.4.0
+      id: nbgv
+      with:
+        setAllVars: true
+
+    - uses: actions/setup-java@v2
+      with:
+        distribution: 'microsoft'
+        java-version: '11'
+          
+    - name: Install MAUI Workloads
+      run: |
+        dotnet workload install android --ignore-failed-sources
+        dotnet workload install maui --ignore-failed-sources
+        
+    - name: Build
+      run: dotnet build ./Maui.ServerDrivenUI.sln --configuration Release
+      
+    - name: Pack
+      run: dotnet pack ./Maui.ServerDrivenUI.sln --output ./artifacts --configuration Release -p:Version=${{ steps.nbgv.outputs.SemVer2 }}
+      
+    - name: Push Nupkg to GitHub Packages
+      if: github.ref == 'refs/heads/main'
+      run: dotnet nuget push **\*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/felipe.baltazar/index.json --skip-duplicate
+        
+    - name: Publish to Nuget.org
+      if: github.ref == 'refs/heads/main'
+      run: dotnet nuget push **\*.nupkg --api-key ${{secrets.NUGET_TOKEN}} -s https://api.nuget.org/v3/index.json --skip-duplicate

@@ -1,0 +1,75 @@
+name: Build Maui.ServerDrivenUI
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    name: Build with dotnet
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 8.x.x
+        
+    - uses: actions/setup-java@v2
+      with:
+        distribution: 'microsoft'
+        java-version: '11'
+          
+    - name: Install MAUI Workloads
+      run: |
+        dotnet workload install android --ignore-failed-sources
+        dotnet workload install maui --ignore-failed-sources
+
+    - name: Build with dotnet core
+      run: dotnet build Maui.ServerDrivenUI.sln --configuration Release
+
+  analyze:
+
+    name: Analyze
+    runs-on: windows-latest
+
+    strategy:
+        fail-fast: false
+        matrix:
+            language: [ 'csharp' ]
+        
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: ${{ matrix.language }}
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 8.x.x
+        
+    - uses: actions/setup-java@v2
+      with:
+        distribution: 'microsoft'
+        java-version: '11'
+          
+    - name: Install MAUI Workloads
+      run: |
+        dotnet workload install android --ignore-failed-sources
+        dotnet workload install maui --ignore-failed-sources
+
+    - name: Build solution
+      run: dotnet build Maui.ServerDrivenUI.sln --configuration Release
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1

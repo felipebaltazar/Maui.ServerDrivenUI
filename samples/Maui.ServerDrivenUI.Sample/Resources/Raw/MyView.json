@@ -1,0 +1,54 @@
+{
+  "Type": "ContentView",
+  "Key": "MyView",
+  "Properties": {
+    "Padding": "0",
+    "x:Name":"sduiView"
+  },
+  "Content": [
+    {
+      "Type": "ScrollView",
+      "Content": [
+        {
+          "Type": "VerticalStackLayout",
+          "Properties": {
+            "Padding": "0"
+          },
+          "Content": [
+            {
+              "Type": "Image",
+              "Properties": {
+                "Aspect": "AspectFit",
+                "HeightRequest": "185",
+                "Source": "dotnet_bot.png"
+              }
+            },
+            {
+              "Type": "Label",
+              "Properties":
+                {
+                  "Style": "{StaticResource Headline}",
+                  "Text": "Hello ServerDrivenUI!"
+                }
+            },
+            {
+              "Type": "Label",
+              "Properties": {
+                "Style": "{StaticResource SubHeadline}",
+                "Text": "Welcome to\nServerDrivenUI!"
+              }
+            },
+            {
+              "Type": "Button",
+              "Properties": {
+                "Command": "{Binding ClickedCommand}",
+                "HorizontalOptions": "Fill",
+                "Text": "Click me"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
