@@ -12,7 +12,7 @@ Server Driven UI library for dotnet MAUI. New features to be deployed on all pla
 - Install the ServerDrivenUI.Maui package
 
  ```
- Install-Package ServerDrivenUI.Maui -Version 0.0.2-pre
+ Install-Package ServerDrivenUI.Maui -Version 8.0.3-pre
  ```
 
 - Add UseServerDrivenUI declaration to your `MauiAppBuilder` and configure it to connect to your API
