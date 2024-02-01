@@ -52,3 +52,7 @@ MainThread.BeginInvokeOnMainThread(() =>
     sduiView.LoadFromXaml(xaml);
 });
 ```
+
+## Repo Activity
+
+![Alt](https://repobeats.axiom.co/api/embed/e3457a9dc9131c33ca38ceb2203bfffa67864080.svg "Repobeats analytics image")
