@@ -1,9 +1,9 @@
 {
-  "Type": "ContentView",
+  "Type": "ServerDrivenView",
   "Key": "MyView",
   "Properties": {
     "Padding": "0",
-    "x:Name":"sduiView"
+    "x:Name": "sduiView"
   },
   "Content": [
     {
@@ -25,11 +25,10 @@
             },
             {
               "Type": "Label",
-              "Properties":
-                {
-                  "Style": "{StaticResource Headline}",
-                  "Text": "Hello ServerDrivenUI!"
-                }
+              "Properties": {
+                "Style": "{StaticResource Headline}",
+                "Text": "Hello ServerDrivenUI!"
+              }
             },
             {
               "Type": "Label",
@@ -41,9 +40,9 @@
             {
               "Type": "Button",
               "Properties": {
-                "Command": "{Binding ClickedCommand}",
                 "HorizontalOptions": "Fill",
-                "Text": "Click me"
+                "Text": "Click me",
+                "x:Name": "myButton"
               }
             }
           ]

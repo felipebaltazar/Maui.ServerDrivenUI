@@ -42,15 +42,19 @@ public static class MauiProgram
 }
 ```
 
-- You can now receive the xaml and load it 
+- You can now use the ServerDrivenUI Elements 
 
-```csharp
+```xaml
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Maui.ServerDrivenUI.Sample.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-var xaml = await _serverDrivenUIService.GetXamlAsync("MyView").ConfigureAwait(false);
-MainThread.BeginInvokeOnMainThread(() =>
-{
-    sduiView.LoadFromXaml(xaml);
-});
+    <ServerDrivenView x:Name="sduiView" ServerKey="MyView" />
+
+</ContentPage>
+
 ```
 
 ## Repo Activity

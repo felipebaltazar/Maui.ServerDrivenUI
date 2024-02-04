@@ -26,11 +26,6 @@ public class ServerUIElement
     public string Class { get; set; }
 
     /// <summary>
-    /// Define if this element is a root visual element
-    /// </summary>
-    public bool IsRootElement { get; set; }
-
-    /// <summary>
     /// Visual element properties
     /// </summary>
     public Dictionary<string, string> Properties { get; set; }
@@ -57,14 +52,12 @@ public class ServerUIElement
     /// <param name="type">Maui element type</param>
     /// <param name="class">Class with namespace eg.: "MyNamespace.Folder.ClassName"</param>
     /// <param name="content">Inner visual element content</param>
-    /// <param name="isRootElement">Define if this element is a root visual element</param>
     /// <param name="customNamespaces">Custom namespaces to be used as root element</param>
     public ServerUIElement(
         string elementKey,
         string type,
         string @class,
         IList<ServerUIElement> content,
-        bool isRootElement = false,
         IList<CustomNamespace>? customNamespaces = null)
     {
         CustomNamespaces = customNamespaces ?? new List<CustomNamespace>(0);
@@ -72,7 +65,6 @@ public class ServerUIElement
         Class = @class;
         Type = type;
         Key = elementKey;
-        IsRootElement = isRootElement;
     }
 
     [JsonConstructor]
