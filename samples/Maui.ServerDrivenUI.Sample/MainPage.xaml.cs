@@ -5,24 +5,22 @@ namespace Maui.ServerDrivenUI.Sample
     [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class MainPage : ContentPage
     {
-        private readonly IServerDrivenUIService _serverDrivenUIService;
         int count = 0;
-
-        public MainPage(IServerDrivenUIService serverDrivenUIService)
+        public MainPage()
         {
-            _serverDrivenUIService = serverDrivenUIService;
             InitializeComponent();
-
-            _ = Task.Run(InitializeComponentAsync);
+            sduiView.OnLoaded = OnSDUILoaded;
         }
 
-        private async Task InitializeComponentAsync()
+        public void OnSDUILoaded()
         {
-            var xaml = await _serverDrivenUIService.GetXamlAsync("MyView").ConfigureAwait(false);
-            MainThread.BeginInvokeOnMainThread(() =>
+            if(sduiView.FindByName("myButton") is Button btn)
             {
-                sduiView.LoadFromXaml(xaml);
-            });
+                btn.Clicked += (s, e) => {
+                    count++;
+                    btn.Text = $"Cliked {count} times!";
+                };
+            }
         }
     }
 }

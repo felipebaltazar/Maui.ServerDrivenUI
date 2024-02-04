@@ -10,15 +10,14 @@ internal static class XamlConverterService
         strBuilder.Append($"<{element.Type}");
         strBuilder.AppendLine();
 
-        if (element.IsRootElement)
-        {
+        if (!string.IsNullOrWhiteSpace(element.Class))
             strBuilder.AppendLine($"x:Class=\"{element.Class}\"");
-            strBuilder.AppendLine($"xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"");
-            strBuilder.AppendLine($"xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"");
 
-            foreach (var cn in element.CustomNamespaces)
-                strBuilder.AppendLine($"xmlns:{cn.Alias}=\"clr-namespace:{cn.Namespace}{ParseAssembly(cn)}\"");
-        }
+        strBuilder.AppendLine($"xmlns=\"http://schemas.microsoft.com/dotnet/2021/maui\"");
+        strBuilder.AppendLine($"xmlns:x=\"http://schemas.microsoft.com/winfx/2009/xaml\"");
+
+        foreach (var cn in element.CustomNamespaces)
+            strBuilder.AppendLine($"xmlns:{cn.Alias}=\"clr-namespace:{cn.Namespace}{ParseAssembly(cn)}\"");
 
         foreach (var prop in element.Properties)
             strBuilder.AppendLine($"{prop.Key}=\"{prop.Value}\"");
