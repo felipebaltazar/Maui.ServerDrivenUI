@@ -25,7 +25,7 @@ jobs:
         dotnet-version: 8.x.x
       
     - name: Nerdbank.GitVersioning
-      uses: dotnet/nbgv@v0.4.0
+      uses: dotnet/nbgv@v0.4.2
       id: nbgv
       with:
         setAllVars: true
