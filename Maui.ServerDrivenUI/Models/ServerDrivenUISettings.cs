@@ -3,6 +3,8 @@ namespace Maui.ServerDrivenUI.Models;
 
 internal sealed class ServerDrivenUISettings : IServerDrivenUISettings
 {
+    public string? CacheFilePath { get; set; }
+
     public IUIElementResolver? ElementResolver { get; private set; }
 
     public HashSet<string> CacheEntryKeys { get; } = [];

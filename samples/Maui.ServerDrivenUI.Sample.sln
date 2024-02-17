@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.ServerDrivenUI", "..\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.ServerDrivenUI.Sample", "Maui.ServerDrivenUI.Sample\Maui.ServerDrivenUI.Sample.csproj", "{7AC7C92A-4526-4AF6-B295-8A29DC301B63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maui.ServerDrivenUI.ApiSample", "Maui.ServerDrivenUI.ApiSample\Maui.ServerDrivenUI.ApiSample.csproj", "{AC1BFD7A-A3A1-46BE-8019-32BAB295CDB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{7AC7C92A-4526-4AF6-B295-8A29DC301B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AC7C92A-4526-4AF6-B295-8A29DC301B63}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7AC7C92A-4526-4AF6-B295-8A29DC301B63}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AC1BFD7A-A3A1-46BE-8019-32BAB295CDB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC1BFD7A-A3A1-46BE-8019-32BAB295CDB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC1BFD7A-A3A1-46BE-8019-32BAB295CDB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC1BFD7A-A3A1-46BE-8019-32BAB295CDB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

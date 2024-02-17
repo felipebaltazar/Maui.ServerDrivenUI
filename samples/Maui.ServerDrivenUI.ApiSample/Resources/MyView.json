@@ -12,7 +12,8 @@
         {
           "Type": "VerticalStackLayout",
           "Properties": {
-            "Padding": "0"
+            "Padding": "32,16",
+            "Spacing": "16"
           },
           "Content": [
             {
@@ -34,14 +35,15 @@
               "Type": "Label",
               "Properties": {
                 "Style": "{StaticResource SubHeadline}",
-                "Text": "Welcome to\nServerDrivenUI!"
+                "Text": "{Binding Text}"
               }
             },
             {
               "Type": "Button",
               "Properties": {
                 "HorizontalOptions": "Fill",
-                "Text": "Click me",
+                "Text": "{Binding ButtonText}",
+                "Command": "{Binding ButtonClickedCommand}",
                 "x:Name": "myButton"
               }
             }

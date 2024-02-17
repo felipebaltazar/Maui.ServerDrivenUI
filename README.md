@@ -7,6 +7,8 @@ Server Driven UI library for dotnet MAUI. New features to be deployed on all pla
  [![Build and publish packages](https://github.com/felipebaltazar/Maui.ServerDrivenUI/actions/workflows/PackageCI.yml/badge.svg)](https://github.com/felipebaltazar/Maui.ServerDrivenUI/actions/workflows/PackageCI.yml)
 
 
+ Sample Api Response: https://serverdrivenui.azurewebsites.net/ServerDrivenUI?key=MyView
+
  ## Getting started
 
 - Install the ServerDrivenUI.Maui package
