@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 
 namespace Maui.ServerDrivenUI.Sample
 {
@@ -14,6 +15,7 @@ namespace Maui.ServerDrivenUI.Sample
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 })
+                .UseMauiCommunityToolkit()
                 .ConfigureServerDrivenUI(s =>
                 {
                     s.RegisterElementGetter(key => MyApi.GetElement(key));

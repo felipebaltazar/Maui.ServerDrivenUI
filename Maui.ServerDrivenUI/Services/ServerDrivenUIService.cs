@@ -9,6 +9,7 @@ public class ServerDrivenUIService
 
     private readonly IEasyCachingProvider _cacheProvider = cacheProvider;
     private readonly IServerDrivenUISettings _settings = settings;
+
     private readonly TaskCompletionSource<bool> _fetchFinished = new();
 
     #endregion
@@ -20,17 +21,7 @@ public class ServerDrivenUIService
 
     public async Task FetchAsync()
     {
-        ServerUIElement[] elements;
-
-        try
-        {
-            elements = await DownloadServerElementsAsync().ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            _fetchFinished.TrySetResult(false);
-            throw new FetchException("Error while downloading server elements", ex);
-        }
+        var elements = await GetElementsAsync().ConfigureAwait(false);
 
         try
         {
@@ -47,16 +38,20 @@ public class ServerDrivenUIService
 
     public async Task<string> GetXamlAsync(string elementKey)
     {
-        if (await _fetchFinished.Task.ConfigureAwait(false))
+        // Try to get the value from cache
+        var element = await _cacheProvider.GetAsync<ServerUIElement>(elementKey)
+                                          .ConfigureAwait(false);
+
+        // If the value is not in cache wait fetch finish, then try to get it from the cache again
+        if (!(element?.HasValue ?? true) && await _fetchFinished.Task.ConfigureAwait(false))
         {
-            var element = await _cacheProvider.GetAsync<ServerUIElement>(elementKey).ConfigureAwait(false)
+            element = await _cacheProvider.GetAsync<ServerUIElement>(elementKey).ConfigureAwait(false)
                 ?? throw new KeyNotFoundException($"Visual element not found for specified key: '{elementKey}'");
 
-            var xaml = element.Value.ToXaml();
-            return xaml;
         }
 
-        return string.Empty;
+        return element?.Value?.ToXaml()
+            ?? string.Empty;
     }
 
     #endregion
@@ -72,6 +67,19 @@ public class ServerDrivenUIService
             throw new DependencyRegistrationException("You need to set 'ElementGetter' in 'ConfigureServerDrivenUI(s=> s.RegisterElementGetter((k)=> yourApiCall(k)))' registration.");
 
         return Task.WhenAll(_settings.CacheEntryKeys.Select(_settings.ElementResolver.GetElementAsync));
+    }
+
+    private async Task<ServerUIElement[]> GetElementsAsync()
+    {
+        try
+        {
+            return await DownloadServerElementsAsync().ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            _fetchFinished.TrySetResult(false);
+            throw new FetchException("Error while downloading server elements", ex);
+        }
     }
 
     #endregion

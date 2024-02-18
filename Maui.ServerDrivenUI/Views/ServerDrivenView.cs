@@ -35,7 +35,7 @@ public class ServerDrivenView : ContentView, IServerDrivenVisualElement
         set => SetValue(StateProperty, value);
     }
 
-    public Action OnLoaded
+    public Action? OnLoaded
     {
         get;
         set;

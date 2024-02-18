@@ -2,6 +2,8 @@
 
 public interface IServerDrivenUISettings
 {
+    string? CacheFilePath { get; set; }
+
     HashSet<string> CacheEntryKeys { get; }
 
     IUIElementResolver? ElementResolver { get; }
