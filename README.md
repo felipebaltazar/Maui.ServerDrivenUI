@@ -59,6 +59,11 @@ public static class MauiProgram
 
 ```
 
+## Limitations
+
+[MAUI 16809 - Label().LoadFromXaml does not work when using Label.FormattedText](https://github.com/dotnet/maui/issues/16809)
+We are currently doing a [workaround](https://github.com/felipebaltazar/Maui.ServerDrivenUI/blob/main/Maui.ServerDrivenUI/Services/XamlConverterService.cs#L119) to make FormattedText work with ServerDrivenUI
+
 ## Repo Activity
 
 ![Alt](https://repobeats.axiom.co/api/embed/e3457a9dc9131c33ca38ceb2203bfffa67864080.svg "Repobeats analytics image")
