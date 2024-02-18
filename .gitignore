@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+samples/Maui.ServerDrivenUI.ApiSample/Properties/ServiceDependencies/**
