@@ -1,4 +1,6 @@
-﻿namespace Maui.ServerDrivenUI.ApiSample;
+﻿using System.Text.Json.Nodes;
+
+namespace Maui.ServerDrivenUI.ApiSample;
 
 public class ServerUIElement
 {
@@ -31,11 +33,10 @@ public class ServerUIElement
     /// <summary>
     /// Visual element properties
     /// </summary>
-    public Dictionary<string, string> Properties
+    public Dictionary<string, JsonNode> Properties
     {
         get; set;
-    }
-        = [];
+    } = [];
 
     /// <summary>
     /// Custom namespaces to be used as root element

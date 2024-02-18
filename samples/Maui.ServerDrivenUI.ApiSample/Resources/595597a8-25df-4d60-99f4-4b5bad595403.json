@@ -1,0 +1,185 @@
+{
+  "Type": "ServerDrivenView",
+  "CustomNamespaces": [
+    {
+      "Namespace": "PipelineApproval",
+      "Alias": "c"
+    },
+    {
+      "Namespace": "PipelineApproval.Presentation",
+      "Alias": "f"
+    },
+    {
+      "Namespace": "PipelineApproval.Presentation.ViewModels.Pages",
+      "Alias": "local"
+    },
+    {
+      "Namespace": "PipelineApproval.Models",
+      "Alias": "m"
+    },
+    {
+      "Namespace": "PipelineApproval",
+      "Alias": "models"
+    },
+    {
+      "Namespace": "PipelineApproval.Presentation.Views.Pages",
+      "Alias": "p"
+    }
+  ],
+  "Properties": {
+    "Grid.Row": "3",
+    "Grid.RowSpan": "2",
+    "Grid.ColumnSpan": "3",
+    "ServerKey": "595597a8-25df-4d60-99f4-4b5bad595403"
+  },
+  "Content": [
+    {
+      "Type": "Grid",
+      "Properties": {
+        "ColumnDefinitions": "*,200,*",
+        "RowDefinitions": "105, *"
+      },
+      "Content": [
+        {
+          "Type": "Label",
+          "Properties": {
+            "Grid.ColumnSpan": "2",
+            "Margin": "16,0,0,0",
+            "FontAttributes": "Bold",
+            "FontSize": "20",
+            "TextColor": "White",
+            "VerticalTextAlignment": "Center",
+            "FormattedText": {
+              "Type": "FormattedString",
+              "Properties": {
+                "Spans": [
+                  {
+                    "Type": "Span",
+                    "Properties": {
+                      "FontFamily": "DevOpsIcons",
+                      "Text": "{x:Static c:Icons.Task}"
+                    }
+                  },
+                  {
+                    "Type": "Span",
+                    "Properties": {
+                      "FontFamily": "OpenSansSemibold",
+                      "Text": " Boards",
+                      "FontAttributes": "Bold"
+                    }
+                  }
+                ]
+
+              }
+            }
+          }
+        },
+        {
+          "Type": "Frame",
+          "Properties": {
+            "Grid.Column": "1",
+            "Grid.ColumnSpan": "2",
+            "Margin": "40,0,16,0",
+            "Padding": "8",
+            "BackgroundColor": "#424242",
+            "BorderColor": "#424242",
+            "CornerRadius": "8",
+            "HeightRequest": "32",
+            "GestureRecognizers": {
+              "Type": "TapGestureRecognizer",
+              "Properties": {
+                "Command": "{Binding ChangeTeamCommand}"
+              }
+            }
+          },
+          "Content": [
+            {
+              "Type": "StackLayout",
+              "Properties": {
+                "Padding": "6,0",
+                "Orientation": "Horizontal",
+                "Spacing": "6"
+              },
+              "Content": [
+                {
+                  "Type": "Label",
+                  "Properties": {
+                    "FontAttributes": "Bold",
+                    "FontSize": "12",
+                    "HorizontalOptions": "CenterAndExpand",
+                    "LineBreakMode": "TailTruncation",
+                    "Text": "{Binding SelectedTeam.Name}",
+                    "TextColor": "White",
+                    "VerticalTextAlignment": "Center"
+                  }
+                },
+                {
+                  "Type": "Label",
+                  "Properties": {
+                    "FontFamily": "FontAwesomeSolid",
+                    "FontSize": "18",
+                    "HorizontalOptions": "Center",
+                    "Text": "{x:Static f:FontAwesome.ChevronDown}",
+                    "TextColor": "White",
+                    "VerticalTextAlignment": "Center"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Type": "CollectionView",
+          "Properties": {
+            "Grid.Row": "1",
+            "Grid.ColumnSpan": "3",
+            "Margin": "16,0",
+            "ItemsSource": "{Binding Boards}",
+            "ItemsLayout": {
+              "Type": "GridItemsLayout",
+              "Properties": {
+                "Orientation": "Vertical",
+                "Span": "2",
+                "HorizontalItemSpacing": "{OnPlatform iOS=16,Default=0}",
+                "VerticalItemSpacing": "{OnPlatform iOS=16,Default=0}"
+              }
+            },
+            "ItemTemplate": {
+              "Type": "DataTemplate",
+              "Content": [
+                {
+                  "Type": "Frame",
+                  "Properties": {
+                    "Margin": "6",
+                    "Padding": "8",
+                    "BackgroundColor": "#424242",
+                    "BorderColor": "#424242",
+                    "CornerRadius": "4",
+                    "HeightRequest": "60"
+                  },
+                  "Content": [
+                    {
+                      "Type": "StackLayout",
+                      "Content": [
+                        {
+                          "Type": "Label",
+                          "Properties": {
+                            "FontAttributes": "Bold",
+                            "FontSize": "12",
+                            "Text": "{Binding Name}",
+                            "TextColor": "White",
+                            "LineBreakMode": "TailTruncation"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

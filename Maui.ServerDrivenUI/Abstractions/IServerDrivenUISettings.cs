@@ -10,7 +10,7 @@ public interface IServerDrivenUISettings
 
     TimeSpan UIElementCacheExpiration { get; set; }
 
-    void RegisterElementGetter(Func<string, Task<ServerUIElement>> UiElementGetter);
+    void RegisterElementGetter(Func<string, IServiceProvider, Task<ServerUIElement>> UiElementGetter);
 
     void AddServerElement(string key);
 }

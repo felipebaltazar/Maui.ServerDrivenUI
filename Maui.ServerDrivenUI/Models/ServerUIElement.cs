@@ -1,4 +1,5 @@
 ﻿using Maui.ServerDrivenUI.Services;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
 namespace Maui.ServerDrivenUI;
@@ -13,33 +14,51 @@ public class ServerUIElement
     /// <summary>
     /// Unique key to map your Maui Visual Element to the server json
     /// </summary>
-    public string Key { get; set; }
+    public string Key
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Maui element type
     /// </summary>
-    public string Type { get; set; }
+    public string Type
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Class with namespace eg.: "MyNamespace.Folder.ClassName"
     /// </summary>
-    public string Class { get; set; }
+    public string Class
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Visual element properties
     /// </summary>
-    public Dictionary<string, string> Properties { get; set; }
+    public Dictionary<string, JsonNode> Properties
+    {
+        get; set;
+    }
         = [];
 
     /// <summary>
     /// Custom namespaces to be used as root element
     /// </summary>
-    public IList<CustomNamespace> CustomNamespaces { get; set; }
+    public IList<CustomNamespace> CustomNamespaces
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Inner visual element content
     /// </summary>
-    public IList<ServerUIElement> Content { get; set; }
+    public IList<ServerUIElement> Content
+    {
+        get; set;
+    }
 
     #endregion
 
@@ -82,8 +101,19 @@ public class ServerUIElement
 
     #region Public Methods
 
-    public string ToXaml() =>
-        XamlConverterService.ConvertToXml(this);
+    public string ToXaml(IList<CustomNamespace>? customNamespaces = null)
+    {
+        if (customNamespaces != null)
+        {
+            foreach (var customNamespace in customNamespaces)
+            {
+                if (!CustomNamespaces.Contains(customNamespace))
+                    CustomNamespaces.Add(customNamespace);
+            }
+        }
+
+        return XamlConverterService.ConvertToXml(this);
+    }
 
     #endregion
 }

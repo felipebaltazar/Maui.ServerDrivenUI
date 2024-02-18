@@ -8,10 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Resources\595597a8-25df-4d60-99f4-4b5bad595403.json" />
     <Content Remove="Resources\MyView.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\595597a8-25df-4d60-99f4-4b5bad595403.json">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\MyView.json">
       <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
     </EmbeddedResource>

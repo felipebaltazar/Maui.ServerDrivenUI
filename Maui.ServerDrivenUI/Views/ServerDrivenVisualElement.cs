@@ -5,8 +5,9 @@ namespace Maui.ServerDrivenUI.Views;
 internal class ServerDrivenVisualElement
 {
     private const string SERVICE_NOT_FOUND = "IServerDrivenUIService not found, make sure you are calling 'ConfigureServerDrivenUI(s=> s.RegisterElementGetter((k)=> yourApiCall(k)))'";
+    private const int MAX_RETRIES = 3;
 
-    internal static async Task InitializeComponentAsync(IServerDrivenVisualElement element)
+    internal static async Task InitializeComponentAsync(IServerDrivenVisualElement element, int attempt = 0)
     {
         try
         {
@@ -22,18 +23,35 @@ internal class ServerDrivenVisualElement
                     .GetXamlAsync(element.ServerKey ?? element.GetType().Name)
                     .ConfigureAwait(false);
 
-                MainThread.BeginInvokeOnMainThread(() =>
-                {
+                MainThread.BeginInvokeOnMainThread(() => {
                     var onLoaded = element.OnLoaded;
                     var visualElement = (element as VisualElement);
                     var currentBindingContext = visualElement?.BindingContext;
 
-                    visualElement?.LoadFromXaml(xaml);
+                    try
+                    {
+                        visualElement?.LoadFromXaml(xaml);
 
-                    if (!IsXamlLoaded(element))
+                        if (XamlConverterService.LabelsSpans.Any())
+                        {
+                            foreach (var labelSpan in XamlConverterService.LabelsSpans)
+                            {
+                                if (visualElement?.FindByName<Label>(labelSpan.Key) is Label label)
+                                {
+                                    label.FormattedText = labelSpan.Value;
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        element.OnError(ex);
+                    }
+
+                    if (!IsXamlLoaded(element, attempt))
                         return;
 
-                    if(visualElement != null)
+                    if (visualElement != null)
                         visualElement.BindingContext = currentBindingContext;
 
                     element.OnLoaded = onLoaded;
@@ -42,8 +60,7 @@ internal class ServerDrivenVisualElement
             }
             else
             {
-                MainThread.BeginInvokeOnMainThread(() =>
-                {
+                MainThread.BeginInvokeOnMainThread(() => {
                     element.State = UIElementState.Error;
                     element.OnError(new DependencyRegistrationException(SERVICE_NOT_FOUND));
                 });
@@ -51,23 +68,28 @@ internal class ServerDrivenVisualElement
         }
         catch (Exception ex)
         {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
+            MainThread.BeginInvokeOnMainThread(() => {
                 element.State = UIElementState.Error;
                 element.OnError(ex);
             });
         }
     }
 
-    private static bool IsXamlLoaded(IServerDrivenVisualElement element)
+    private static bool IsXamlLoaded(IServerDrivenVisualElement element, int attempt)
     {
         switch (element)
         {
             case ServerDrivenContentPage page when page.Content is null:
-                _ = Task.Run(() => InitializeComponentAsync(element));
-                return false;
             case ServerDrivenView view when view.Content is null:
-                _ = Task.Run(() => InitializeComponentAsync(element));
+                if (attempt < MAX_RETRIES)
+                {
+                    _ = Task.Run(() => InitializeComponentAsync(element, attempt++));
+                }
+                else
+                {
+                    MainThread.BeginInvokeOnMainThread(() => element.State = UIElementState.Error);
+                }
+
                 return false;
         }
 

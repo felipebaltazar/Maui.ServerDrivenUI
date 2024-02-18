@@ -18,7 +18,7 @@ namespace Maui.ServerDrivenUI.Sample
                 .UseMauiCommunityToolkit()
                 .ConfigureServerDrivenUI(s =>
                 {
-                    s.RegisterElementGetter(key => MyApi.GetElement(key));
+                    s.RegisterElementGetter((key, provider) => MyApi.GetElement(key));
 
                     s.AddServerElement("MyView");
                 });
