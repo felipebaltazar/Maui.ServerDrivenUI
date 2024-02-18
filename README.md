@@ -34,7 +34,7 @@ public static class MauiProgram
             })
             .ConfigureServerDrivenUI(s =>
             {
-                s.RegisterElementGetter((key, provider) => provider.provider.GetService<IYourApiService>().YourApiMethod(key)); //Register which api will be used to get the UI
+                s.RegisterElementGetter((key, provider) => provider.GetService<IYourApiService>().YourApiMethod(key)); //Register which api will be used to get the UI
 
                 s.AddServerElement("MyView"); // Register the visual elements that will follow server driven ui
             });
