@@ -26,15 +26,15 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder
-			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
-			{
+            .UseMauiApp<App>()
+            .ConfigureFonts(fonts =>
+            {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             })
             .ConfigureServerDrivenUI(s =>
             {
-                s.RegisterElementGetter(key => MyApi.GetElement(key)); //Register which api will be used to get the UI
+                s.RegisterElementGetter((key, provider) => provider.provider.GetService<IYourApiService>().YourApiMethod(key)); //Register which api will be used to get the UI
 
                 s.AddServerElement("MyView"); // Register the visual elements that will follow server driven ui
             });

@@ -1,4 +1,6 @@
 ﻿
+using Maui.ServerDrivenUI.Services;
+
 namespace Maui.ServerDrivenUI.Models;
 
 internal sealed class ServerDrivenUISettings : IServerDrivenUISettings
@@ -17,6 +19,6 @@ internal sealed class ServerDrivenUISettings : IServerDrivenUISettings
             throw new DependencyRegistrationException($"The key: '{key}' already has been registered");
     }
 
-    public void RegisterElementGetter(Func<string, Task<ServerUIElement>> uiElementGetter) =>
+    public void RegisterElementGetter(Func<string, IServiceProvider, Task<ServerUIElement>> uiElementGetter) =>
         ElementResolver = new UIElementResolver(uiElementGetter);
 }

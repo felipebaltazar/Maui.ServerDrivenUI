@@ -49,7 +49,7 @@ public static class AppBuilderExtensions
 
     private static bool InitServerDrivenUIService()
     {
-        var service = Application.Current!.Handler.MauiContext!.Services.GetService<IServerDrivenUIService>();
+        var service = ServiceProviderHelper.ServiceProvider!.GetService<IServerDrivenUIService>();
         _ = Task.Run(service!.FetchAsync);
 
         return false;

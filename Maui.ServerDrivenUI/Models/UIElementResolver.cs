@@ -1,9 +1,11 @@
-﻿namespace Maui.ServerDrivenUI.Models;
+﻿using Maui.ServerDrivenUI.Services;
 
-internal sealed class UIElementResolver(Func<string, Task<ServerUIElement>> uiElementGetter) : IUIElementResolver
+namespace Maui.ServerDrivenUI.Models;
+
+internal sealed class UIElementResolver(Func<string, IServiceProvider, Task<ServerUIElement>> uiElementGetter) : IUIElementResolver
 {
-    private readonly Func<string, Task<ServerUIElement>> _uiElementGetter = uiElementGetter;
+    private readonly Func<string, IServiceProvider, Task<ServerUIElement>> _uiElementGetter = uiElementGetter;
 
     public Task<ServerUIElement> GetElementAsync(string elementKey) =>
-        _uiElementGetter(elementKey);
+        _uiElementGetter(elementKey, ServiceProviderHelper.ServiceProvider!);
 }
