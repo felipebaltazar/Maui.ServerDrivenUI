@@ -18,8 +18,7 @@ public static class AppBuilderExtensions
         builder.Services.AddEasyCaching(o =>
             o.UseLiteDB(c => ConfigureDb(c, settings)));
 
-        builder.ConfigureLifecycleEvents(b =>
-        {
+        builder.ConfigureLifecycleEvents(b => {
 #if IOS
             b.AddiOS(iOS => iOS.FinishedLaunching((app, launchOptions) => InitServerDrivenUIService()));
 #elif ANDROID
@@ -39,7 +38,7 @@ public static class AppBuilderExtensions
     private static void ConfigureDb(LiteDBOptions config, ServerDrivenUISettings settings)
     {
         var dbFilePath = settings.CacheFilePath
-            ?? FileSystem.Current.AppDataDirectory + "sduicache.ldb";
+            ?? Path.Combine(FileSystem.Current.AppDataDirectory, "sduicache.ldb");
 
         config.DBConfig = new LiteDBDBOptions {
             FileName = dbFilePath,
