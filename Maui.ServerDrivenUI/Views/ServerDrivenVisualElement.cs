@@ -9,8 +9,10 @@ internal class ServerDrivenVisualElement
 
     internal static async Task InitializeComponentAsync(IServerDrivenVisualElement element, int attempt = 0)
     {
+        var errorMessage = string.Empty;
         try
         {
+            ShowLoadingView(element);
             MainThread.BeginInvokeOnMainThread(() => element.State = UIElementState.Loading);
 
             var serverDrivenUiService = ServiceProviderHelper
@@ -60,6 +62,8 @@ internal class ServerDrivenVisualElement
             }
             else
             {
+                errorMessage = SERVICE_NOT_FOUND;
+
                 MainThread.BeginInvokeOnMainThread(() => {
                     element.State = UIElementState.Error;
                     element.OnError(new DependencyRegistrationException(SERVICE_NOT_FOUND));
@@ -68,10 +72,16 @@ internal class ServerDrivenVisualElement
         }
         catch (Exception ex)
         {
+            errorMessage = ex.Message;
             MainThread.BeginInvokeOnMainThread(() => {
                 element.State = UIElementState.Error;
                 element.OnError(ex);
             });
+        }
+
+        if (!string.IsNullOrWhiteSpace(errorMessage))
+        {
+            ShowErrorView(element, errorMessage);
         }
     }
 
@@ -96,6 +106,50 @@ internal class ServerDrivenVisualElement
         return true;
     }
 
+    private static void ShowLoadingView(IServerDrivenVisualElement element)
+    {
+        View loadingView = (element.LoadingTemplate?.CreateContent() as View)
+            ?? CreateDefaultLoadingTemplate();
+
+        SetContent(element, loadingView);
+    }
+
+    private static void ShowErrorView(IServerDrivenVisualElement element, string errorMessage)
+    {
+        try
+        {
+            View errorView = (element.ErrorTemplate?.CreateContent() as View)
+                ?? CreateDefaultErrorTemplate(errorMessage);
+
+            SetContent(element, errorView);
+        }
+        catch (Exception ex)
+        {
+            MainThread.BeginInvokeOnMainThread(() => {
+                element.State = UIElementState.Error;
+                element.OnError(ex);
+            });
+        }
+    }
+
+    private static void SetContent(IServerDrivenVisualElement element, View template)
+    {
+        if (element is ContentView contentView && template != null)
+        {
+            MainThread.BeginInvokeOnMainThread(() => {
+                template.BindingContext = contentView.BindingContext;
+                contentView.Content = template;
+            });
+        }
+        else if (element is ContentPage contentPage && template != null)
+        {
+            MainThread.BeginInvokeOnMainThread(() => {
+                template.BindingContext = contentPage.BindingContext;
+                contentPage.Content = template;
+            });
+        }
+    }
+
     internal static void OnStatePropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (bindable is not IServerDrivenVisualElement view
@@ -106,4 +160,34 @@ internal class ServerDrivenVisualElement
         if (newState is UIElementState.Loaded)
             view.OnLoaded?.Invoke();
     }
+
+    internal static View CreateDefaultLoadingTemplate() =>
+        new Frame() {
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            BackgroundColor = Colors.Black,
+            BorderColor = Colors.Transparent,
+            Content = new ActivityIndicator() {
+                IsRunning = true,
+                IsEnabled = true,
+                Color = Colors.White,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center
+            }
+        };
+
+    internal static View CreateDefaultErrorTemplate(string errorMessage) =>
+        new Frame() {
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            BackgroundColor = Colors.Red,
+            BorderColor = Colors.Transparent,
+            Content = new Label {
+                Text = errorMessage,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.Center
+            }
+        };
 }
