@@ -2,21 +2,17 @@
 
 public interface IServerDrivenVisualElement
 {
-    public string? ServerKey
-    {
-        get; set;
-    }
+    string? ServerKey { get; set; }
 
-    public UIElementState State
-    {
-        get; set;
-    }
-    public Action OnLoaded
-    {
-        get;
-        set;
-    }
+    UIElementState State { get; set; }
+
+    Action? OnLoaded { get; set; }
+
+    DataTemplate LoadingTemplate { get; set; }
+
+    DataTemplate ErrorTemplate { get; set; }
 
     void OnStateChanged(UIElementState newState);
+
     void OnError(Exception ex);
 }

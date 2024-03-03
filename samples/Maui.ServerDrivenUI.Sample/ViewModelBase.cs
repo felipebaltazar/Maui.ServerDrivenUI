@@ -11,7 +11,6 @@ public abstract class ViewModelBase : INotifyPropertyChanged
 
     protected void Set<T>(ref T field, T value, string propertyName)
     {
-
         if (!EqualityComparer<T>.Default.Equals(field, value))
         {
             field = value;

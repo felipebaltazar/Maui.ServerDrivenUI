@@ -4,6 +4,22 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <ServerDrivenView x:Name="sduiView" ServerKey="MyView" />
+    <ServerDrivenView x:Name="sduiView" ServerKey="MyView">
+        <ServerDrivenView.ErrorTemplate>
+            <DataTemplate>
+                <StackLayout>
+                    <Label Text="Unexpected error" />
+                </StackLayout>
+            </DataTemplate>
+        </ServerDrivenView.ErrorTemplate>
+
+        <ServerDrivenView.LoadingTemplate>
+            <DataTemplate>
+                <StackLayout>
+                    <Label Text="Loading..." />
+                </StackLayout>
+            </DataTemplate>
+        </ServerDrivenView.LoadingTemplate>
+    </ServerDrivenView>
 
 </ContentPage>

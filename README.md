@@ -44,7 +44,10 @@ public static class MauiProgram
 }
 ```
 
-- You can now use the ServerDrivenUI Elements 
+- You can now use the ServerDrivenUI Elements, defining the key that will be used to get the UI from the API
+- You can also define a LoadingTemplate and an ErrorTemplate to be shown while the UI is being fetched from the API
+
+```csharp
 
 ```xaml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -53,7 +56,23 @@ public static class MauiProgram
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <ServerDrivenView x:Name="sduiView" ServerKey="MyView" />
+    <ServerDrivenView x:Name="sduiView" ServerKey="MyView">
+        <ServerDrivenView.ErrorTemplate>
+            <DataTemplate>
+                <StackLayout>
+                    <Label Text="Unexpected error" />
+                </StackLayout>
+            </DataTemplate>
+        </ServerDrivenView.ErrorTemplate>
+
+        <ServerDrivenView.LoadingTemplate>
+            <DataTemplate>
+                <StackLayout>
+                    <Label Text="Loading..." />
+                </StackLayout>
+            </DataTemplate>
+        </ServerDrivenView.LoadingTemplate>
+    </ServerDrivenView>
 
 </ContentPage>
 
@@ -67,4 +86,4 @@ We are currently doing a [workaround](https://github.com/felipebaltazar/Maui.Ser
 
 ## Repo Activity
 
-![Alt](https://repobeats.axiom.co/api/embed/e3457a9dc9131c33ca38ceb2203bfffa67864080.svg "Repobeats analytics image")
+![Alt](https://repobeats.axiom.co/api/embed/e3457a9dc9131c33ca38ceb2203bfffa67864080.svg "Repo activity analytics image")

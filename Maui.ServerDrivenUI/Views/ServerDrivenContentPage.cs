@@ -18,6 +18,18 @@ public abstract class ServerDrivenContentPage : ContentPage, IServerDrivenVisual
             typeof(ServerDrivenContentPage),
             UIElementState.None,
             propertyChanged: ServerDrivenVisualElement.OnStatePropertyChanged);
+    
+    public static readonly BindableProperty LoadingTemplateProperty = BindableProperty.Create(
+            nameof(LoadingTemplate),
+            typeof(DataTemplate),
+            typeof(ServerDrivenView),
+            null);
+
+    public static readonly BindableProperty ErrorTemplateProperty = BindableProperty.Create(
+        nameof(ErrorTemplate),
+        typeof(DataTemplate),
+        typeof(ServerDrivenView),
+        null);
 
     #endregion
 
@@ -35,10 +47,22 @@ public abstract class ServerDrivenContentPage : ContentPage, IServerDrivenVisual
         set => SetValue(StateProperty, value);
     }
 
-    public Action OnLoaded
+    public Action? OnLoaded
     {
         get;
         set;
+    }
+
+    public DataTemplate LoadingTemplate
+    {
+        get => (DataTemplate)GetValue(LoadingTemplateProperty);
+        set => SetValue(LoadingTemplateProperty, value);
+    }
+
+    public DataTemplate ErrorTemplate
+    {
+        get => (DataTemplate)GetValue(ErrorTemplateProperty);
+        set => SetValue(ErrorTemplateProperty, value);
     }
 
     #endregion
