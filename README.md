@@ -47,7 +47,6 @@ public static class MauiProgram
 - You can now use the ServerDrivenUI Elements, defining the key that will be used to get the UI from the API
 - You can also define a LoadingTemplate and an ErrorTemplate to be shown while the UI is being fetched from the API
 
-```csharp
 
 ```xaml
 <?xml version="1.0" encoding="utf-8" ?>
