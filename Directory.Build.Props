@@ -12,8 +12,8 @@
     <IncludeSource>True</IncludeSource>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/felipebaltazar/Maui.ServerDrivenUI</RepositoryUrl>
-    <NeoControlsPackageIcon>$(MSBuildThisFileDirectory)icon.png</NeoControlsPackageIcon>
-    <NeoControlsLicenseFile>$(MSBuildThisFileDirectory)LICENSE</NeoControlsLicenseFile>
+    <ServerDrivenUIPackageIcon>$(MSBuildThisFileDirectory)icon.png</ServerDrivenUIPackageIcon>
+    <ServerDrivenUILicenseFile>$(MSBuildThisFileDirectory)LICENSE</ServerDrivenUILicenseFile>
     <PackageTags>serverdrivenui;maui;dotnet-maui;xaml;ios;android;server;driven;ui</PackageTags>
     <Copyright>Copyright Felipe Baltazar 2024</Copyright>
     <Description>
@@ -27,11 +27,11 @@
           Visible="False"
           Pack="True"
           PackagePath="" />
-    <None Include="$(NeoControlsPackageIcon)"
+    <None Include="$(ServerDrivenUIPackageIcon)"
           Visible="False"
           Pack="True"
           PackagePath="" />
-    <None Include="$(NeoControlsLicenseFile)"
+    <None Include="$(ServerDrivenUILicenseFile)"
           Visible="False"
           Pack="True"
           PackagePath="" />
