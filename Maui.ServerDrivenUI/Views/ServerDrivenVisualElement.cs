@@ -1,10 +1,12 @@
-﻿using Maui.ServerDrivenUI.Services;
+﻿using Maui.ServerDrivenUI.Models.Exceptions;
+using Maui.ServerDrivenUI.Services;
 
 namespace Maui.ServerDrivenUI.Views;
 
 internal class ServerDrivenVisualElement
 {
     private const string SERVICE_NOT_FOUND = "IServerDrivenUIService not found, make sure you are calling 'ConfigureServerDrivenUI(s=> s.RegisterElementGetter((k)=> yourApiCall(k)))'";
+    private const string XAML_LOAD_ERROR_MESSAGE = "Error loading XAML";
     private const int MAX_RETRIES = 3;
 
     internal static async Task InitializeComponentAsync(IServerDrivenVisualElement element, int attempt = 0)
@@ -33,6 +35,7 @@ internal class ServerDrivenVisualElement
                     try
                     {
                         visualElement?.LoadFromXaml(xaml);
+                        errorMessage = string.Empty;
 
                         if (XamlConverterService.LabelsSpans.Any())
                         {
@@ -47,7 +50,9 @@ internal class ServerDrivenVisualElement
                     }
                     catch (Exception ex)
                     {
-                        element.OnError(ex);
+                        var xamlException = new UnableToLoadXamlException(XAML_LOAD_ERROR_MESSAGE, xaml, ex);
+                        errorMessage = xamlException.Message;
+                        element.OnError(xamlException);
                     }
 
                     if (!IsXamlLoaded(element, attempt))
