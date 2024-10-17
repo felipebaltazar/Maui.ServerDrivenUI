@@ -1,6 +1,7 @@
 ﻿using EasyCaching.LiteDB;
 using Maui.ServerDrivenUI.Models;
 using Maui.ServerDrivenUI.Services;
+using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 
 namespace Maui.ServerDrivenUI;
@@ -48,8 +49,22 @@ public static class AppBuilderExtensions
 
     private static bool InitServerDrivenUIService()
     {
-        var service = ServiceProviderHelper.ServiceProvider!.GetService<IServerDrivenUIService>();
-        _ = Task.Run(service!.FetchAsync);
+        var serviceProvider = ServiceProviderHelper.ServiceProvider!;
+        var service = serviceProvider.GetService<IServerDrivenUIService>();
+
+        _ = Task.Run(async () => 
+        {
+            try
+            {
+                await service!.FetchAsync();
+            }
+            catch (Exception ex)
+            {
+
+                serviceProvider.GetService<ILogger>()?
+                               .LogError(ex, "Error fetching server driven UI");
+            }
+        });
 
         return false;
     }
