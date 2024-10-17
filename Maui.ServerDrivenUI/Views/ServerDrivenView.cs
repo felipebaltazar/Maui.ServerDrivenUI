@@ -65,6 +65,12 @@ public class ServerDrivenView : ContentView, IServerDrivenVisualElement
         set;
     }
 
+    public Action<Exception>? OnErrorEvent
+    {
+        get;
+        set;
+    }
+
     #endregion
 
     #region Constructors
@@ -85,6 +91,7 @@ public class ServerDrivenView : ContentView, IServerDrivenVisualElement
 
     public virtual void OnError(Exception ex)
     {
+        OnErrorEvent?.Invoke(ex);
     }
 
     #endregion
