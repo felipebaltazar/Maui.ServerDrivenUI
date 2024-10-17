@@ -31,6 +31,7 @@ internal class ServerDrivenVisualElement
                     var onLoaded = element.OnLoaded;
                     var visualElement = (element as VisualElement);
                     var currentBindingContext = visualElement?.BindingContext;
+                    var forceRetry = false;
 
                     try
                     {
@@ -51,11 +52,11 @@ internal class ServerDrivenVisualElement
                     catch (Exception ex)
                     {
                         var xamlException = new UnableToLoadXamlException(XAML_LOAD_ERROR_MESSAGE, xaml, ex);
-                        errorMessage = xamlException.Message;
                         element.OnError(xamlException);
+                        forceRetry = true;
                     }
 
-                    if (!IsXamlLoaded(element, attempt))
+                    if (!IsXamlLoaded(element, attempt, forceRetry))
                         return;
 
                     if (visualElement != null)
@@ -90,8 +91,14 @@ internal class ServerDrivenVisualElement
         }
     }
 
-    private static bool IsXamlLoaded(IServerDrivenVisualElement element, int attempt)
+    private static bool IsXamlLoaded(IServerDrivenVisualElement element, int attempt, bool forceRetry = false)
     {
+        if (attempt < MAX_RETRIES && forceRetry)
+        {
+            _ = Task.Run(() => InitializeComponentAsync(element, attempt++));
+            return false;
+        }
+
         switch (element)
         {
             case ServerDrivenContentPage page when page.Content is null:

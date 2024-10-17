@@ -12,7 +12,6 @@ internal static class XamlConverterService
     public static string ConvertToXml(ServerUIElement element)
     {
         var strBuilder = new StringBuilder();
-        strBuilder.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
         strBuilder.Append($"<{element.Type}");
         strBuilder.AppendLine();
 

@@ -112,7 +112,9 @@ public class ServerUIElement
             }
         }
 
-        return XamlConverterService.ConvertToXml(this);
+        var xaml = XamlConverterService.ConvertToXml(this);
+        return $"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+            $"{xaml}";
     }
 
     #endregion
