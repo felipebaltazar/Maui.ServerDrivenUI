@@ -77,6 +77,17 @@ public static class MauiProgram
 
 ```
 
+## IOS
+
+We need to set the interpreter to allow the Xaml loader to work
+
+```xml
+  <PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
+    <UseInterpreter>true</UseInterpreter>
+    <MtouchInterpreter>-all</MtouchInterpreter>
+  </PropertyGroup>
+```
+
 ## Know issues
 
 [MAUI 16809 - Label().LoadFromXaml does not work when using Label.FormattedText](https://github.com/dotnet/maui/issues/16809)
