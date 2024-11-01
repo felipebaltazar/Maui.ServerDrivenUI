@@ -1,5 +1,6 @@
 ﻿using Maui.ServerDrivenUI.Models.Exceptions;
 using Maui.ServerDrivenUI.Services;
+using Maui.ServerDrivenUI.Xaml;
 
 namespace Maui.ServerDrivenUI.Views;
 
@@ -35,7 +36,7 @@ internal class ServerDrivenVisualElement
 
                     try
                     {
-                        visualElement?.LoadFromXaml(xaml);
+                        visualElement?.LoadXaml(xaml);
                         errorMessage = string.Empty;
 
                         if (XamlConverterService.LabelsSpans.Any())

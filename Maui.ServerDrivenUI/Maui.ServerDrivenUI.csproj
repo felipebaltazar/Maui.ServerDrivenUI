@@ -26,4 +26,9 @@
   <ItemGroup>
     <None Include="build\*.targets" Pack="True" PackagePath="buildTransitive" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Maui.Core.DeviceTests\Microsoft.Maui.Controls.DeviceTests.csproj" />
+  </ItemGroup>
+  
 </Project>
