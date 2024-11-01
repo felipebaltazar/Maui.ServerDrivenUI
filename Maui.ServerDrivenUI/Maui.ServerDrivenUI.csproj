@@ -10,6 +10,8 @@
     <PackageId>ServerDrivenUI.Maui</PackageId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
@@ -28,7 +30,15 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Maui.Core.DeviceTests\Microsoft.Maui.Controls.DeviceTests.csproj" />
+    <ProjectReference Include="..\Microsoft.Maui.Core.DeviceTests\Microsoft.Maui.Controls.DeviceTests.csproj"  PrivateAssets="all" >
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>Microsoft.Maui.Controls.DeviceTests.dll</IncludeAssets>
+    </ProjectReference>
   </ItemGroup>
-  
+
+  <Target DependsOnTargets="ResolveReferences" Name="CopyProjectReferencesToPackage">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))"/>
+    </ItemGroup>
+  </Target>
 </Project>
