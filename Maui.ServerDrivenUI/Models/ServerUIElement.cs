@@ -1,6 +1,7 @@
 ﻿using Maui.ServerDrivenUI.Services;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Maui.ServerDrivenUI;
 
@@ -113,9 +114,19 @@ public class ServerUIElement
         }
 
         var xaml = XamlConverterService.ConvertToXml(this);
-        return $"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
-            $"{xaml}";
+        return DoRemovespace($"<?xml version=\"1.0\" ?>\n" +
+            $"{xaml}");
     }
 
     #endregion
+
+    private static string DoRemovespace(string strFile)
+    {
+        var str = System.IO.File.ReadAllText(strFile);
+        str = str.Replace("\n", "");
+        str = str.Replace("\r", "");
+        var regex = new Regex(@">\s*<");
+        return regex.Replace(str, "><");
+
+    }
 }

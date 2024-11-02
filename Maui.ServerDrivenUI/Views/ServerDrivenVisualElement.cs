@@ -15,14 +15,15 @@ internal class ServerDrivenVisualElement
         var errorMessage = string.Empty;
         try
         {
-            ShowLoadingView(element);
+            MainThread.BeginInvokeOnMainThread(() => ShowLoadingView(element));
             MainThread.BeginInvokeOnMainThread(() => element.State = UIElementState.Loading);
+            await Task.Yield();
 
             var serverDrivenUiService = ServiceProviderHelper
                 .ServiceProvider?
                 .GetService<IServerDrivenUIService>();
 
-            if (serverDrivenUiService != null)
+            if (serverDrivenUiService is not null)
             {
                 var xaml = await serverDrivenUiService
                     .GetXamlAsync(element.ServerKey ?? element.GetType().Name)
