@@ -30,7 +30,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Maui.Core.DeviceTests\Microsoft.Maui.Controls.DeviceTests.csproj"  PrivateAssets="all" >
+    <ProjectReference Include="..\Maui.ServerDrivenUI.Xaml\Maui.ServerDrivenUI.Xaml.csproj" PrivateAssets="all">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Microsoft.Maui.Controls.DeviceTests.dll</IncludeAssets>
     </ProjectReference>
@@ -38,7 +38,7 @@
 
   <Target DependsOnTargets="ResolveReferences" Name="CopyProjectReferencesToPackage">
     <ItemGroup>
-      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))"/>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
     </ItemGroup>
   </Target>
 </Project>
