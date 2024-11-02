@@ -7,6 +7,11 @@ public class UnableToLoadXamlException : Exception
         get;
     }
 
+    public override string Message
+    { 
+        get => $"{base.Message} | {Xaml}";
+    }
+
     public UnableToLoadXamlException(string message, string xaml, Exception inner) : base(message, inner)
     {
         Xaml = xaml;
