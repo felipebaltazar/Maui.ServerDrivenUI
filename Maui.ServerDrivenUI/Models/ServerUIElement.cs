@@ -8,7 +8,7 @@ namespace Maui.ServerDrivenUI;
 /// <summary>
 /// Represents a MAUI visual element
 /// </summary>
-public class ServerUIElement
+public partial class ServerUIElement
 {
     #region Properties
 
@@ -114,19 +114,19 @@ public class ServerUIElement
         }
 
         var xaml = XamlConverterService.ConvertToXml(this);
-        return DoRemovespace($"<?xml version=\"1.0\" ?>\n" +
-            $"{xaml}");
+        return DoRemovespace(xaml);
     }
 
     #endregion
 
-    private static string DoRemovespace(string strFile)
+    private string DoRemovespace(string str)
     {
-        var str = System.IO.File.ReadAllText(strFile);
         str = str.Replace("\n", "");
         str = str.Replace("\r", "");
-        var regex = new Regex(@">\s*<");
-        return regex.Replace(str, "><");
 
+        return CompactXmlRegex().Replace(str, "><");
     }
+
+    [GeneratedRegex(@">\s*<")]
+    private partial Regex CompactXmlRegex();
 }
