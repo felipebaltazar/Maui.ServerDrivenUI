@@ -27,10 +27,14 @@ internal static class XamlConverterService
         var contentPropertiesBuilder = ParseProperties(element, strBuilder);
 
         strBuilder.Append('>');
-        strBuilder.AppendLine();
 
-        strBuilder.AppendJoin('\n', element.Content.Select(c => c.ToXaml(element.CustomNamespaces)));
-        strBuilder.AppendLine();
+        if (element.Content.Count > 0)
+        {
+            strBuilder.AppendLine();
+            strBuilder.AppendJoin('\n', element.Content.Select(c => c.ToXaml(element.CustomNamespaces)));
+            strBuilder.AppendLine();
+        }
+
         strBuilder.Append(contentPropertiesBuilder);
 
         strBuilder.AppendLine();
