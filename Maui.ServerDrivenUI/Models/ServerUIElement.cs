@@ -114,7 +114,7 @@ public partial class ServerUIElement
         }
 
         var xaml = XamlConverterService.ConvertToXml(this);
-        return DoRemovespace(xaml);
+        return xaml;
     }
 
     #endregion
