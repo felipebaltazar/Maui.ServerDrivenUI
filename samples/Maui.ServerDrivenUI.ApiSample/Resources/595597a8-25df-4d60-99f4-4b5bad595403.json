@@ -119,7 +119,7 @@
                     "FontFamily": "FontAwesomeSolid",
                     "FontSize": "18",
                     "HorizontalOptions": "Center",
-                    "Text": "{x:Static f:FontAwesome.ChevronDown}",
+                    "Text": "&#xf078;",
                     "TextColor": "White",
                     "VerticalTextAlignment": "Center"
                   }
