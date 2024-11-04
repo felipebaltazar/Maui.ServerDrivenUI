@@ -55,6 +55,7 @@ internal class ServerDrivenVisualElement
                     {
                         var xamlException = new UnableToLoadXamlException(XAML_LOAD_ERROR_MESSAGE, xaml, ex);
                         element.OnError(xamlException);
+                        errorMessage = XAML_LOAD_ERROR_MESSAGE;
                         forceRetry = true;
                     }
 
