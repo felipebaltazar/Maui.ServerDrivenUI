@@ -9,7 +9,7 @@ jobs:
     name: Handle new issue
     steps:
       - name: Find duplicates
-        uses: wow-actions/potential-duplicates@v1.0.8
+        uses: wow-actions/potential-duplicates@v1.1.0
         with:
           GITHUB_TOKEN: ${{ github.token }}
           label: duplicate
