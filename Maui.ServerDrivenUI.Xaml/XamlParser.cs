@@ -363,7 +363,8 @@ static partial class XamlParser
         if (type != null && typeArguments != null)
         {
             XamlParseException innerexception = null;
-            var args = typeArguments.Select(delegate (XmlType xmltype) {
+            var args = typeArguments.Select(delegate (XmlType xmltype)
+            {
                 var t = GetElementType(xmltype, xmlInfo, currentAssembly, out XamlParseException xpe);
                 if (xpe != null)
                 {
