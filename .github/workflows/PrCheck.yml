@@ -19,7 +19,7 @@ jobs:
       with:
         dotnet-version: 8.x.x
         
-    - uses: actions/setup-java@v4
+    - uses: actions/setup-java@v5
       with:
         distribution: 'microsoft'
         java-version: '11'
@@ -58,7 +58,7 @@ jobs:
       with:
         dotnet-version: 8.x.x
         
-    - uses: actions/setup-java@v4
+    - uses: actions/setup-java@v5
       with:
         distribution: 'microsoft'
         java-version: '11'
