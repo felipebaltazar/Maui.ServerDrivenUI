@@ -30,7 +30,7 @@ jobs:
       with:
         setAllVars: true
 
-    - uses: actions/setup-java@v4
+    - uses: actions/setup-java@v5
       with:
         distribution: 'microsoft'
         java-version: '11'
